@@ -15,7 +15,8 @@ dependencies = [
     "langchain-pinecone (>=0.2.11,<0.3.0)",
     "transformers (>=4.55.0,<5.0.0)",
     "torch (>=2.8.0,<3.0.0)",
-    "protobuf (>=6.31.1,<7.0.0)"
+    "protobuf (>=6.31.1,<7.0.0)",
+    "accelerate (>=1.10.0,<2.0.0)"
 ]
 
 [tool.poetry.group.dev.dependencies]
