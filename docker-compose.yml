@@ -1,0 +1,38 @@
+services:
+  python-app:
+    build: .
+    volumes:
+      - logs:/src/logs
+
+  fluentd:
+    build:
+      context: ./fluentd
+    volumes:
+      - ./src:/src
+      - logs:/logs
+      - ./fluentd/fluent.conf:/fluentd/etc/fluent.conf:ro
+    command: fluentd -c /fluentd/etc/fluent.conf
+    depends_on:
+      - python-app
+
+    ports:
+      - "24224:24224"
+
+  loki:
+    image: grafana/loki:3.5.3
+    ports:
+      - "3100:3100"
+
+  grafana:
+    image: grafana/grafana:12.0.2
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - grafana-storage:/var/lib/grafana
+
+volumes:
+  logs:
+  grafana-storage:
