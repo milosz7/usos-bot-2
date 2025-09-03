@@ -3,12 +3,14 @@ services:
     build: .
     volumes:
       - logs:/src/logs
+      - ./src:/src
+    ports:
+      - "8000:8000"
 
   fluentd:
     build:
       context: ./fluentd
     volumes:
-      - ./src:/src
       - logs:/logs
       - ./fluentd/fluent.conf:/fluentd/etc/fluent.conf:ro
     command: fluentd -c /fluentd/etc/fluent.conf
